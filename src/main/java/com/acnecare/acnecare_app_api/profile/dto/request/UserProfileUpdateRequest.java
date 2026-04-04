@@ -1,17 +1,19 @@
-package com.acnecare.acnecare_app_api.identity.dto.request;
+package com.acnecare.acnecare_app_api.profile.dto.request;
 
 import lombok.Data;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCreationRequest {
-    String email;
-    String password;
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class UserProfileUpdateRequest {
+
     String firstName;
     String lastName;
     String phone;

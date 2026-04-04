@@ -19,11 +19,14 @@ import com.acnecare.acnecare_app_api.identity.entity.User;
 import com.acnecare.acnecare_app_api.identity.mapper.UserMapper;
 import com.acnecare.acnecare_app_api.identity.repository.RoleRepository;
 import com.acnecare.acnecare_app_api.identity.repository.UserRepository;
+import com.acnecare.acnecare_app_api.profile.service.UserProfileService;
 
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import com.acnecare.acnecare_app_api.profile.mapper.UserProfileMapper;
+import com.acnecare.acnecare_app_api.profile.dto.request.UserProfileCreationRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +37,7 @@ public class UserService {
     RoleRepository roleRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+    UserProfileService userProfileService;
 
     @Transactional
     public UserResponse createUser(UserCreationRequest request) {
@@ -53,6 +57,18 @@ public class UserService {
         user.setRoles(Set.of(patientRole));
 
         userRepository.save(user);
+
+        userProfileService.createUserProfile(UserProfileCreationRequest.builder()
+                .userId(user.getId())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .phone(request.getPhone())
+                .address(request.getAddress())
+                .height(request.getHeight())
+                .weight(request.getWeight())
+                .gender(request.isGender())
+                .build());
+
         return userMapper.toUserResponse(user);
     }
 
