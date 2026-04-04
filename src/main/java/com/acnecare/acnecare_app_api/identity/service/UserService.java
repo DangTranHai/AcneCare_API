@@ -20,6 +20,7 @@ import com.acnecare.acnecare_app_api.identity.mapper.UserMapper;
 import com.acnecare.acnecare_app_api.identity.repository.RoleRepository;
 import com.acnecare.acnecare_app_api.identity.repository.UserRepository;
 import com.acnecare.acnecare_app_api.profile.service.UserProfileService;
+
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
