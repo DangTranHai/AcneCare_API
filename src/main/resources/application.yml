@@ -31,7 +31,7 @@ auth:
     max-access-token-age: 900
     max-refresh-token-age: 604800
     access-path: /
-    refresh-path: /api/auth
+    refresh-path: /api/v1/auth
 
 cors:
   allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
