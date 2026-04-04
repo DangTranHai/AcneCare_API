@@ -29,6 +29,8 @@ public enum ErrorCode {
         INVALID_TOKEN(1013, "Invalid token", HttpStatus.UNAUTHORIZED),
         UNAUTHENTICATED(1014, "Unauthenticated", HttpStatus.UNAUTHORIZED),
         ROLE_NOT_FOUND(1015, "Role not found", HttpStatus.NOT_FOUND),
+        ACNE_NOT_FOUND(1016, "Acne not found", HttpStatus.NOT_FOUND),
+        ACNE_PREDICTION_NOT_FOUND(1017, "Acne prediction not found", HttpStatus.NOT_FOUND),
         UNCATEGORIZED_ERROR(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR);
 
         int code;
