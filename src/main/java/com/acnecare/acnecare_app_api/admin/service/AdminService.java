@@ -17,6 +17,8 @@ import com.acnecare.acnecare_app_api.identity.entity.User;
 import com.acnecare.acnecare_app_api.identity.repository.UserRepository;
 import com.acnecare.acnecare_app_api.identity.service.UserService;
 import com.acnecare.acnecare_app_api.post.service.PostService;
+import com.acnecare.acnecare_app_api.profile.entity.UserProfile;
+import com.acnecare.acnecare_app_api.profile.repository.UserProfileRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -31,11 +33,15 @@ public class AdminService {
     UserService userService;
     PostService postService;
     AdminMapper adminMapper;
+    UserProfileRepository userProfileRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
     public List<AdminUserResponse> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(adminMapper::toAdminUserResponse)
+                .map(user -> {
+                    UserProfile profile = userProfileRepository.findByUserId(user.getId()).orElse(null);
+                    return adminMapper.toAdminUserResponse(user, profile);
+                })
                 .toList();
     }
 
@@ -43,7 +49,8 @@ public class AdminService {
     public AdminUserResponse getUserById(String id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        return adminMapper.toAdminUserResponse(user);
+        UserProfile profile = userProfileRepository.findByUserId(user.getId()).orElse(null);
+        return adminMapper.toAdminUserResponse(user, profile);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -51,7 +58,8 @@ public class AdminService {
         userService.updateStatus(id, status);
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        return adminMapper.toAdminUserResponse(user);
+        UserProfile profile = userProfileRepository.findByUserId(user.getId()).orElse(null);
+        return adminMapper.toAdminUserResponse(user, profile);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
