@@ -20,4 +20,5 @@ public interface PostMapper {
     @Mapping(target = "user", ignore = true)
     List<PostsResponse> toPostsResponseList(List<Post> postsList);
     Set<RoleResponse> toRoleResponseSet(Set<Role> roles);
+
 }
