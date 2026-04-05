@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.AccessLevel;
 
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,5 +15,6 @@ import lombok.AccessLevel;
 public class AuthenticationResponse {
 
     boolean isAuthenticated;
+    String userId;
 
 }
