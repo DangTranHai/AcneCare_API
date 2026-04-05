@@ -15,6 +15,9 @@ public class AdminUserResponse {
     String id;
     String email;
     String status;
+    String firstName;
+    String lastName;
+    String phone;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     LocalDateTime lastLoginAt;
