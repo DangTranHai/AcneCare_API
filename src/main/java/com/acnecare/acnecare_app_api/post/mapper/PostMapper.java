@@ -1,40 +1,24 @@
 package com.acnecare.acnecare_app_api.post.mapper;
 
+import java.util.List;
+import java.util.Set;
+
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import com.acnecare.acnecare_app_api.post.dto.request.PostsRequest;
+import com.acnecare.acnecare_app_api.post.dto.response.PostsResponse;
 import com.acnecare.acnecare_app_api.post.entity.Post;
-import com.acnecare.acnecare_app_api.admin.dto.response.AdminPostResponse;
-import com.acnecare.acnecare_app_api.admin.dto.request.AdminPostCreationRequest;
-import com.acnecare.acnecare_app_api.admin.dto.request.AdminPostUpdateRequest;
+import com.acnecare.acnecare_app_api.identity.dto.response.RoleResponse;
+import com.acnecare.acnecare_app_api.identity.entity.Role;
 
 @Mapper(componentModel = "spring")
 public interface PostMapper {
+    Post toPosts(PostsRequest request);    
+    PostsResponse toPostsResponse(Post posts);
+    
+    @Mapping(target = "user", ignore = true)
+    List<PostsResponse> toPostsResponseList(List<Post> postsList);
+    Set<RoleResponse> toRoleResponseSet(Set<Role> roles);
 
-    AdminPostResponse toAdminPostResponse(Post post);
-
-    default Post toPost(AdminPostCreationRequest request) {
-        if (request == null) {
-            return null;
-        }
-        return Post.builder()
-                .title(request.getTitle())
-                .content(request.getContent())
-                .authorId(request.getAuthorId())
-                .status(request.getStatus() == null ? "DRAFT" : request.getStatus())
-                .build();
-    }
-
-    default void updatePostFromRequest(AdminPostUpdateRequest request, Post post) {
-        if (request == null || post == null) {
-            return;
-        }
-        if (request.getTitle() != null) {
-            post.setTitle(request.getTitle());
-        }
-        if (request.getContent() != null) {
-            post.setContent(request.getContent());
-        }
-        if (request.getStatus() != null) {
-            post.setStatus(request.getStatus());
-        }
-    }
 }

@@ -90,7 +90,10 @@ public class AuthenticationService {
         authCookieService.setAccessToken(response, accessToken);
         authCookieService.setRefreshToken(response, refreshToken);
 
-        return AuthenticationResponse.builder().isAuthenticated(true).build();
+        return AuthenticationResponse.builder()
+                .isAuthenticated(true)
+                .userId(user.getId())
+                .build();
     }
 
     @Transactional
@@ -126,7 +129,7 @@ public class AuthenticationService {
         authCookieService.setAccessToken(response, accessToken);
         authCookieService.setRefreshToken(response, refreshToken);
 
-        return AuthenticationResponse.builder().isAuthenticated(true).build();
+        return AuthenticationResponse.builder().isAuthenticated(true).userId(user.getId()).build();
     }
 
     @Transactional
